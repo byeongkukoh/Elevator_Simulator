@@ -3,16 +3,20 @@
 import { useState } from "react";
 import { useElevatorStore } from "@/stores/elevatorStore";
 
+interface SimulatorControlsProps {
+    isSimulating: boolean;
+    setIsSimulating: (isSimulating: boolean) => void;
+}
+
 const elevatorOptions = [1, 2, 3, 4, 5];
 const floorOptions = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
-export default function SimulatorControls() {
+export default function SimulatorControls({isSimulating, setIsSimulating}: SimulatorControlsProps) {
     const { settings, setSettings, resetSimulation } = useElevatorStore();
 
     // 드롭다운 선택 값을 로컬 state로 보관 -> 적용시 store에 반영
     const [selectedElevators, setSeletedElevators] = useState(settings.elevatorCount);
     const [selectedFloors, setSelectedFloors] = useState(settings.floorCount);
-    const [isSimulating, setIsSimulating] = useState(false);
 
     // 적용 버튼 클릭 시 store의 settings 업데이트
     const handleApplySettings = () => {

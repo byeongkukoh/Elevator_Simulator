@@ -1,9 +1,10 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { Elevator } from '@/types/elevator';
 import { Passenger } from '@/types/passenger';
 import { LogEntry } from '@/types/log';
 import { Statistics } from '@/types/statistics';
 
+let passengerIdCounter = 1;
 interface ElevatorStoreState {
     elevators: Elevator[];
     waitingList: Passenger[];
@@ -17,12 +18,12 @@ interface ElevatorStoreState {
     // 동작 관련 함수들
     setSettings: (settings: {elevatorCount: number; floorCount: number}) => void;
     resetSimulation: () => void;
-    addWaitingPassenger: (person: Passenger) => void;
+    addWaitingPassenger: (person: Omit<Passenger, "id">) => void;
     updateElevator: (id: number, newData: Partial<Elevator>) => void;
     addLog: (entry: LogEntry) => void;
 }
 
-export const useElevatorStore = create<ElevatorStoreState>((set) => ({
+export const useElevatorStore = create<ElevatorStoreState>((set, get) => ({
     elevators: [
         {id: 1, currentFloor: 0, status: "IDLE", targetFloor: [], passengers: []},
         {id: 2, currentFloor: 0, status: "IDLE", targetFloor: [], passengers: []},
@@ -81,11 +82,21 @@ export const useElevatorStore = create<ElevatorStoreState>((set) => ({
                 maxMovementTime: 0,
             },
         })),
-    addWaitingPassenger: (person) => 
-        set((state) => ({
-            waitingList: [...state.waitingList, person],
-            stats: {...state.stats, totalRequests: state.stats.totalRequests + 1},
-        })),
+    addWaitingPassenger: (person: Omit<Passenger, "id">) => 
+        set((state) => {
+            const newPassenger = {
+                ...person,
+                id: passengerIdCounter++,
+            }
+
+            return {
+                waitingList: [...state.waitingList, newPassenger],
+                stats: {
+                    ...state.stats, 
+                    totalRequests: state.stats.totalRequests + 1
+                },
+            };
+        }),
     updateElevator: (id, newData) =>
         set((state) => ({
             elevators: state.elevators.map((elevator) =>

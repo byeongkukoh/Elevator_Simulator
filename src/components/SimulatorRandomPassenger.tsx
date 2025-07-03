@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useElevatorStore } from "@/stores/elevatorStore";
-import { getRandomFloors } from "@/utils/random";
+import { getRandomFloors } from "@/utils/getRandomFloors";
 
 export default function SimulatorRandomPassenger({isSimulating}: {isSimulating: boolean}) {
     const addWatingPassenger = useElevatorStore((state) => state.addWaitingPassenger);

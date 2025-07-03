@@ -4,4 +4,5 @@ export interface Passenger {
     targetFloor: number;
     requestTime: number;
     assigned: boolean;
+    assignedElevatorId?: number;
 }

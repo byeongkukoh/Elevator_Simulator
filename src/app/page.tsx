@@ -1,7 +1,24 @@
+'use client';
+
+import Elevator from '@/components/Elevator';
+import WaitingList from '@/components/WaitingList';
+import { useElevatorStore } from '@/stores/elevatorStore';
+
 export default function Home() {
+  const {elevators, waitingList} = useElevatorStore();
+
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <main>
+      <h1>Elevator Simulator</h1>
+      <div>
+        <WaitingList waitingList={waitingList} />
+      </div>
+      
+      <div>
+        {elevators.map((elevator) => (
+          <Elevator key={elevator.id} data={elevator} />
+        ))}
+      </div>
+    </main>
   )
 }

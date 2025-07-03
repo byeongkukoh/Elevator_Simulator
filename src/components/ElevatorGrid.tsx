@@ -16,7 +16,7 @@ export default function ElevatorGrid({ elevators, waitingList, floorCount }: Ele
 
     return(
         <div className="overflow-x-auto rounded-xl shadow-lg bg-white p-4">
-            <table className="min-w-[500px] border-collapse text-center">
+            <table className="min-w-[800px] border-collapse text-center">
                 <thead>
                     <tr className="bg-blue-50 border-b">
                         <th className="py-2 px-3">층수</th>
@@ -32,7 +32,7 @@ export default function ElevatorGrid({ elevators, waitingList, floorCount }: Ele
                         <tr key={floor} className="border-b hover:bg-blue-50 transition">
                             <td className="py-2 px-3 font-semibold text-blue-500">{floor}층</td>
                             {elevators.map((elevator) => (
-                                <td key={elevator.id} className="py-2 px-3">
+                                <td key={elevator.id} className="py-2 px-3 text-center align-middle">
                                     {elevator.currentFloor === floor && (
                                         <ElevatorIcon elevatorId={elevator.id} status={elevator.status} />
                                     )}

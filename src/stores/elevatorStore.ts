@@ -9,6 +9,14 @@ interface ElevatorStoreState {
     waitingList: Passenger[];
     log: LogEntry[];
     stats: Statistics;
+    // 현재 적용 중인 건물 층수 / 엘리베이터 개수 설정
+    settings: {
+        floorCount: number;
+        elevatorCount: number;
+    };
+    // 동작 관련 함수들
+    setSettings: (settings: {elevatorCount: number; floorCount: number}) => void;
+    resetSimulation: () => void;
     addWaitingPassenger: (person: Passenger) => void;
     updateElevator: (id: number, newData: Partial<Elevator>) => void;
     addLog: (entry: LogEntry) => void;
@@ -28,6 +36,51 @@ export const useElevatorStore = create<ElevatorStoreState>((set) => ({
         averageMovmentTime: 0,
         maxMovementTime: 0,
     },
+    // 기본 설정 값
+    settings: {
+        floorCount: 10,
+        elevatorCount: 2,
+    },
+    setSettings: (settings) =>
+        set(() => ({
+            settings: {...settings},
+            // 엘리베이터 및 기타 상태도 함께 초기화
+            elevators: Array.from({length: settings.elevatorCount}, (_, idx) => ({
+                id: idx + 1,
+                currentFloor: 1,
+                status: "IDLE",
+                targetFloor: [],
+                passengers: [],
+            })),
+            waitingList: [],
+            log: [],
+            stats: {
+                totalRequests: 0,
+                averageWaitTime: 0,
+                maxWaitTime: 0,
+                averageMovmentTime: 0,
+                maxMovementTime: 0,
+            },
+        })),
+    resetSimulation: () => 
+        set((state) => ({
+            elevators: Array.from({length: state.settings.elevatorCount}, (_, idx) => ({
+                id: idx + 1,
+                currentFloor: 1,
+                status: "IDLE",
+                targetFloor: [],
+                passengers: [],
+            })),
+            waitingList: [],
+            log: [],
+            stats: {
+                totalRequests: 0,
+                averageWaitTime: 0,
+                maxWaitTime: 0,
+                averageMovmentTime: 0,
+                maxMovementTime: 0,
+            },
+        })),
     addWaitingPassenger: (person) => 
         set((state) => ({
             waitingList: [...state.waitingList, person],

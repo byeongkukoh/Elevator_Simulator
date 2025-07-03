@@ -197,6 +197,10 @@ export const useElevatorStore = create<ElevatorStoreState>((set, get) => ({
 
         updatePassengers = [...updatePassengers, ...boardingPassengers];
 
+        const updatedWaitingList = state.waitingList.filter(
+            passenger => !boardingPassengers.includes(passenger.id)
+        );
+
         // targetFloor 제거
         const updatedTargetFloor = elevator.targetFloor.slice(1);
 
@@ -213,6 +217,9 @@ export const useElevatorStore = create<ElevatorStoreState>((set, get) => ({
             } : elevator
         );
 
-        return { elevators: updatedElevators };
+        return { 
+            elevators: updatedElevators, 
+            waitingList: updatedWaitingList 
+        };
     })
 }));

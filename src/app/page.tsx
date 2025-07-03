@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import SimulatorControls from '@/components/SimulatorControls';
 import ElevatorGrid from '@/components/ElevatorGrid';
 import SimulatorRandomPassenger from '@/components/SimulatorRandomPassenger';
-
-import Elevator from '@/components/Elevator';
-import WaitingList from '@/components/WaitingList';
+import { SimulatorElevatorRunner } from '@/components/SimulatorElevatorRunner';
 
 import { useElevatorStore } from '@/stores/elevatorStore';
 
@@ -29,22 +28,15 @@ export default function Home() {
       {/* 랜덤 승객 생성 */}
       <SimulatorRandomPassenger isSimulating={isSimulating} />
 
+      {/* 엘리베이터 시뮬레이터 이동 */}
+      <SimulatorElevatorRunner isSimulating={isSimulating} />
+
       {/* 시뮬레이터 GUI 파트 */}
       <ElevatorGrid
         elevators={elevators}
         waitingList={waitingList}
         floorCount={floorCount} 
       />
-      {/* 추후 상황판에서 재사용 예정 */}
-      {/* <div>
-        <WaitingList waitingList={waitingList} />
-      </div>
-      
-      <div>
-        {elevators.map((elevator) => (
-          <Elevator key={elevator.id} data={elevator} />
-        ))}
-      </div> */}
     </main>
   )
 }

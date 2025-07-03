@@ -1,4 +1,4 @@
-import { use, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useElevatorStore } from "@/stores/elevatorStore";
 
 export function SimulatorElevatorRunner( {isSimulating}: {isSimulating: boolean} ) {
@@ -45,7 +45,7 @@ export function SimulatorElevatorRunner( {isSimulating}: {isSimulating: boolean}
                 clearInterval(timerRef.current);
             }
         };
-    }, [isSimulating, updateElevators, updateElevators]);
+    }, [isSimulating, updateElevators, loadElevator]);
 
     return null;
 }

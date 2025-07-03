@@ -1,5 +1,5 @@
 export interface Statistics {
-    totalPassengers: number;
+    totalRequests: number;
     averageWaitTime: number;
     maxWaitTime: number;
     averageMovmentTime: number;

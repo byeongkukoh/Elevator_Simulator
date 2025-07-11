@@ -8,11 +8,12 @@ import SimulatorRandomPassenger from '@/components/SimulatorRandomPassenger';
 import { SimulatorElevatorRunner } from '@/components/SimulatorElevatorRunner';
 
 import { useElevatorStore } from '@/stores/elevatorStore';
+import ElevatorStatusPanel from '@/components/ElevatorStatusPanel';
 
 export default function Home() {
   const [isSimulating, setIsSimulating] = useState(false); // 시뮬레이션 시작 여부
 
-  const {elevators, waitingList, settings} = useElevatorStore();
+  const { elevators, waitingList, settings } = useElevatorStore();
   const floorCount = settings.floorCount; // 현재 설정된 층수
 
   return (
@@ -20,7 +21,7 @@ export default function Home() {
       <h1 className='text-4xl font-bold text-blue-900 mb-6'>Elevator Simulator</h1>
 
       {/* 시뮬레이터 컨트롤(세팅) 파트*/}
-      <SimulatorControls 
+      <SimulatorControls
         isSimulating={isSimulating}
         setIsSimulating={setIsSimulating}
       />
@@ -31,12 +32,15 @@ export default function Home() {
       {/* 엘리베이터 시뮬레이터 이동 */}
       <SimulatorElevatorRunner isSimulating={isSimulating} />
 
-      {/* 시뮬레이터 GUI 파트 */}
+      {/* 시뮬레이터 */}
       <ElevatorGrid
         elevators={elevators}
         waitingList={waitingList}
-        floorCount={floorCount} 
+        floorCount={floorCount}
       />
+
+      {/* 엘리베이터 상태 패널 */}
+      <ElevatorStatusPanel />
     </main>
   )
 }
